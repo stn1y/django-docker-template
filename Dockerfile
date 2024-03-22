@@ -3,6 +3,8 @@ FROM python:3.11-alpine as base
 FROM base as builder
 
 RUN apk update && apk --no-cache add python3-dev libpq-dev && mkdir /install
+RUN apt-get update
+RUN apt-get install gstreamer1.0-libav
 WORKDIR /install
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --prefix=/install -r ./requirements.txt
