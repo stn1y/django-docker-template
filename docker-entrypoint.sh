@@ -11,4 +11,4 @@ fi
 # You can comment out this line if you want to migrate manually
 gosu "$USER" python manage.py migrate --noinput
 
-exec "$@"
+gosu "$@"
