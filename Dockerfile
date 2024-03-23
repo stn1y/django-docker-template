@@ -4,7 +4,7 @@ FROM base as builder
 
 RUN apk update && apk --no-cache add python3-dev libpq-dev && mkdir /install
 RUN apt-get update
-RUN apt-get install gstreamer1.0-libav
+RUN apt-get install -y gstreamer1.0-libav
 WORKDIR /install
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --prefix=/install -r ./requirements.txt
