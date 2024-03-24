@@ -24,7 +24,7 @@ services:
       - "traefik.http.routers.development.priority=1"
 
   nginx:
-    image: nginx:1.23-alpine
+    image: nginx:1.23
     env_file: .env
     restart: unless-stopped
     volumes:

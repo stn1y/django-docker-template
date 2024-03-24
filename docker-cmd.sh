@@ -1,6 +1,6 @@
 #!/bin/sh
 # vim:sw=4:ts=4:et
-
+echo "Running as user: $USER"
 gosu "$USER" python manage.py collectstatic --noinput
 
 # Creating the first user in the system

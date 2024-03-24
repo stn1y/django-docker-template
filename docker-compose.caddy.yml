@@ -25,7 +25,7 @@ services:
       - postgres
 
   caddy:
-    image: caddy:2.7-alpine
+    image: caddy:2.7
     env_file: .env
     environment:
       - "MY_DOMAIN=${MY_DOMAIN}"
