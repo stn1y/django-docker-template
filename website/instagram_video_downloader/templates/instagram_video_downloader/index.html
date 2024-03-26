@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends 'app_layout.html' %}
+{% load static %}
+
+{% block head %}
+  <link href="{% static 'styles.css' %}" rel="stylesheet">
+
+  <!-- FONT: Abril Fatface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+  <div class="body-container">
+    <div class="index-title-container" id="index-title-container">
+      <div class="index-title unselectable" id="index-title">DOWNLOADER</div>
+    </div>
+
+    <div class="container forms-container">
+      <div class="forms-wrapper">
+        <div class="step-indicator">
+          <div id="si-1"></div>
+          <div id="si-2"></div>
+          <div id="si-3"></div>
+          <div id="si-4"></div>
+          <div id="si-5"></div>
+        </div>
+
+        <div class="loader-container" id="loader-container" style="display: none;">
+          <div class="loader-wrapper">
+            <div>PREPARING...</div>
+            <div class="loading">
+              <div class="loading-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="dynamic-content-container" id="dynamic-content-container">download</div> -->
+
+        <form class="first-form" id="first-form">
+          <div class="form-group first-ig-vd-input-and-alert-container" id="first-ig-vd-input-and-alert-container">
+            <input type="text" class="form-control first-ig-vd-input" id="first-ig-vd-input" name="first-ig-vd-input" aria-describedby="first-ig-vd-input-alert">
+            <div id="first-ig-vd-input-alert" class="form-text first-ig-vd-input-alert"></div>
+            <div class="first-ig-vd-input-label" id="first-ig-vd-input-label">Instagram Video Link</div>
+          </div>
+          <button type="button" class="btn btn-primary first-ig-vd-submit" id="first-ig-vd-submit">SUBMIT</button>
+        </form>
+  
+        <form class="second-form" id="second-form" style="display: none;">
+          <div class="form-group second-ig-vd-input-and-alert-container" id="second-ig-vd-input-and-alert-container">
+            <input type="text" class="form-control second-ig-vd-input" id="second-ig-vd-input" name="second-ig-vd-input" aria-describedby="second-ig-vd-input-alert" placeholder="Leave empty for default filename">
+            <div id="second-ig-vd-input-alert" class="form-text second-ig-vd-input-alert" style="display: none;">Can not contain &lt; , &gt; , : , &quot; , / , \ , | , ? , or *</div>
+            <div class="second-ig-vd-input-label" id="second-ig-vd-input-label">Custom File Name</div>
+          </div>
+          <button type="button" class="btn btn-primary second-ig-vd-submit" id="second-ig-vd-submit">Submit</button>
+        </form>
+
+        <form class="download-form" id="download-form" style="display: none;">
+          <div class="form-group download-ig-vd-input-and-alert-container" id="download-ig-vd-input-and-alert-container">
+            <input type="text" class="form-control download-ig-vd-input" id="download-ig-vd-input" name="download-ig-vd-input" aria-describedby="download-ig-vd-input-alert" readonly>
+            <div id="download-ig-vd-input-alert" class="form-text text-muted download-ig-vd-input-alert"></div>
+            <div class="download-ig-vd-input-label" id="download-ig-vd-input-label">Download Link</div>
+          </div>
+          <button type="button" class="btn btn-primary download-ig-vd-submit" id="download-ig-vd-submit">DOWNLOAD!</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="{% static 'instagram_video_downloader/app.js' %}"></script>
+
+  </div>
+{% endblock %}
