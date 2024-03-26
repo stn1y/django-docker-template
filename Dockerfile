@@ -204,12 +204,33 @@ COPY $PROJECT_NAME $DJANGO_BASE_DIR
 
 # Install Gosu, setup directories, and configure permissions
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends gosu libpq-dev && \
+    apt-get install -y --no-install-recommends \
+        gosu \
+        libpq-dev \
+        gstreamer1.0-libav \
+        libsoup2.4-1 \
+        libgtk-3-0 \
+        libgdk-pixbuf2.0-0 \
+        libwoff1 \
+        libharfbuzz-icu0 \
+        gstreamer1.0-plugins-bad \
+        libenchant-2-2 \
+        libsecret-1-0 \
+        libhyphen0 \
+        libmanette-0.2-0 \
+        libgbm1 \
+        libxkbcommon0 \
+        libgles2 \
+        libgstreamer-gl1.0-0 \
+        libgstreamer-plugins-base1.0-0 \
+        xvfb && \
     rm -rf /var/lib/apt/lists/* && \
     chmod +x /docker-entrypoint.sh /docker-cmd.sh && \
     mkdir -p $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR && \
     adduser --disabled-password --gecos '' --uid $USER_UID $USER && \
     chown -R $USER:$USER $DJANGO_BASE_DIR $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR
+
+RUN playwright install
 
 WORKDIR $DJANGO_BASE_DIR
 ENTRYPOINT ["/docker-entrypoint.sh"]
