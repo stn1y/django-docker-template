@@ -230,11 +230,6 @@ RUN apt-get update && \
     adduser --disabled-password --gecos '' --uid $USER_UID $USER && \
     chown -R $USER:$USER $DJANGO_BASE_DIR $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR
 
-RUN playwright install
-RUN playwright install chromium
-RUN playwright install firefox
-RUN playwright install webkit
-
 WORKDIR $DJANGO_BASE_DIR
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/docker-cmd.sh"]

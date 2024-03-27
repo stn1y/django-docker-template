@@ -1,3 +1,6 @@
+echo "Installing Playwright dependencies..."
+gosu "$USER" playwright install
+
 #!/bin/sh
 # vim:sw=4:ts=4:et
 echo "Running as user: $USER"
