@@ -86,9 +86,9 @@ def create_download_link(request):
     decoded_download_link = decode_data(encoded_download_link)
     unique_id = uuid.uuid4()
     if file_name == '':
-      download_link = f'http://127.0.0.1:8000/instagram_video_downloader/igvd/{unique_id}/'
+      download_link = f'https://stanleygfu.com/instagram_video_downloader/igvd/{unique_id}/'
     else:
-      download_link = f'http://127.0.0.1:8000/instagram_video_downloader/igvd/{unique_id}/?filename={file_name}'
+      download_link = f'https://stanleygfu.com/instagram_video_downloader/igvd/{unique_id}/?filename={file_name}'
     new_connection = Bind(
       original_link=decoded_download_link,
       unique_id=unique_id
