@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse, HttpResponse
 import json
 import asyncio
+from collections import Counter
 from playwright.sync_api import sync_playwright, Playwright
 import sys
 from .utils import encode_data, decode_data
@@ -41,6 +42,45 @@ def process(request):
   
   return JsonResponse({'status': 'success', 'encoded_download_link': encoded_download_link}, status=200)
 
+# block pages by resource type. e.g. image, stylesheet
+BLOCK_RESOURCE_TYPES = [
+  'beacon',
+  'csp_report',
+  'font',
+  'image',
+  'imageset',
+  'media',
+  'object',
+  'texttrack',
+#  we can even block stylsheets and scripts though it's not recommended:
+# 'stylesheet',
+# 'script',  
+# 'xhr',
+]
+
+# we can also block popular 3rd party resources like tracking:
+BLOCK_RESOURCE_NAMES = [
+  'adzerk',
+  'analytics',
+  'cdn.api.twitter',
+  'doubleclick',
+  'exelator',
+  'facebook',
+  'fontawesome',
+  'google',
+  'google-analytics',
+  'googletagmanager',
+]
+
+def intercept_route(route):
+    """intercept all requests and abort blocked ones"""
+    if route.request.resource_type in BLOCK_RESOURCE_TYPES:
+        print(f'blocking background resource {route.request} blocked type "{route.request.resource_type}"')
+        return route.abort()
+    if any(key in route.request.url for key in BLOCK_RESOURCE_NAMES):
+        print(f"blocking background resource {route.request} blocked name {route.request.url}")
+        return route.abort()
+    return route.continue_()
 
 def run_process(input_url):
 
@@ -48,11 +88,12 @@ def run_process(input_url):
   display.start()
 
   with sync_playwright() as p:
-    webkit = p.webkit
-    browser = webkit.launch(headless=False)
-    page = browser.new_page()
+    browser = p.chromium.launch(headless=False)
+    context = browser.new_context(viewport={"width": 1920, "height": 1080})
+    page = context.new_page()
     
     try:
+      page.route("**/*", intercept_route)
       page.goto('https://snapinsta.app/')
       page.fill('form[name="formurl"] input[id="url"]', input_url)
       page.click('form[name="formurl"] button[type="submit"]')
